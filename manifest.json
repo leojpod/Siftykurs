@@ -1,0 +1,15 @@
+{
+	"app": {
+		"title": "SiftyRoll",
+		"version": "0.0.1",
+		"runtime": "executable",
+		"server": "127.0.0.1:7000",
+		"description": "A simple game with a rolling stone",
+		"appModule": "UNUSED",
+		"coverArt": "cover.png",
+	    "requiredSiftCount" : 3,
+	    "soundsPath": "assets/sounds",
+	    "imagesPath": "assets/images"
+	}
+
+}
