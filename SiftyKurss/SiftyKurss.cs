@@ -15,6 +15,13 @@ namespace SiftyKurss
     override public void Setup()
     {
       Log.Debug("Setup()");
+      //init 3 cubes with basic actions
+      //put the stone randomly on one of them
+      //wait until the cube with the stone is clicked
+      
+      //but for now let´s just create one cube and makes a stone roll on it...
+      Cube c = this.CubeSet[0];
+      RollingCube rc = new RollingCube(c);
     }
 
     override public void Tick()
