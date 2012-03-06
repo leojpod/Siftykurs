@@ -22,6 +22,7 @@ namespace SiftyKurss
       //but for now let´s just create one cube and makes a stone roll on it...
       Cube c = this.CubeSet[0];
       RollingCube rc = new RollingCube(c);
+      Log.Debug("the rolling cube has the id: "+rc.C.UniqueId);
     }
 
     override public void Tick()

@@ -39,7 +39,7 @@ namespace SiftyKurss
 		
 		private void ChangeCoordinate(Cube c, int x, int y, int z){
 			int[] delta = new int[3];
-			int[] newTilt = new int{x, y, z};
+			int[] newTilt = new int[]{x, y, z};
 			for(int i = 0; i < 3 ; i++){
 				delta[i] = newTilt[i] - _tilt[i];
 			}
@@ -48,7 +48,9 @@ namespace SiftyKurss
 			_x += delta[0];
 			_y += delta[1];
 			//adjust the tilt values to match the new ones
-			_x_tilt = x; _y_tilt = y; _z_tilt = z;
+			for (int i = 0; i < 3; i++){
+				_tilt[i] = newTilt[i];
+			}
 		}
 		
 		private void DrawStone(){
