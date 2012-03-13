@@ -1,3 +1,4 @@
 BallStone
+borders
 pavement
 stoneTest

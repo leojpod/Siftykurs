@@ -20,12 +20,15 @@ namespace SiftyKurss
       //wait until the cube with the stone is clicked
       
       //but for now let´s just create one cube and makes a stone roll on it...
-      foreach(Cube c in CubeSet){
-        GameCube g = new GameCube(c);
+      foreach(Cube c in this.CubeSet){
+        GameCube gc = new GameCube(c);
+        gc.SetupCube();
+        Log.Debug("one more GameCube ready!");
       }
+
       Cube aCube = this.CubeSet[0];
       RollingCube rc = new RollingCube(aCube);
-
+      rc.SetupCube();
       Log.Debug("the rolling cube has the id: "+rc.C.UniqueId);
     }
 
