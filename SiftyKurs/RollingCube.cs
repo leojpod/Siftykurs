@@ -8,27 +8,34 @@ namespace SiftyKurss
   {
     private int _x, _y;
     private int _height, _width;
-    private string _stone;
+    private readonly string _STONE;
+    private float _speed_x;
+    private float _speed_y;
 
-    public RollingCube (Cube c): base(c)
+    public RollingCube (Cube c): this(c,MIDDLE, MIDDLE,0,0) {}
+
+    public RollingCube(Cube c, int x, int y): this(c, x, y, 0,0){}
+
+    public RollingCube(Cube c, int x, int y, int initialSpeed_x, int initialSpeed_y) : base(c)
     {
       _c.userData = this;
-      _x = Cube.SCREEN_WIDTH /2;
-      _y = Cube.SCREEN_HEIGHT /2;
-      _stone = "BallStone";
+      _x = x;
+      _y = y;
+      _speed_x = initialSpeed_x;
+      _speed_y = initialSpeed_y;
+      _STONE = "BallStone";
       _height = Cube.SCREEN_HEIGHT / 4;
       _width = Cube.SCREEN_WIDTH / 4;
     }
-
 
     override
     internal void SetupCube ()
     {
       base.SetupCube();
-      DrawCube (true);
+      DrawCube ();
      #region adding the events handling
-      _c.TiltEvent += ChangeCoordinate;
-      _c.NeighborAddEvent += PrepareCubeRolling;
+      _c.TiltEvent += ChangeSpeed;
+      //_c.NeighborAddEvent += PrepareCubeRolling;
      #endregion
       //that's it for now
     }
@@ -42,31 +49,32 @@ namespace SiftyKurss
       _c.NeighborRemoveEvent += switcher.Remove;
     }
 
+    public void Refresh(float deltaTime){
+      Log.Debug(deltaTime+" frame(s) spent since last Refresh");
 
-   
-    private void ChangeCoordinate (Cube c, int x, int y, int z)
+      //speed is given in pixel per frame
+      // and delta is given in frame which is perfect:
+
+      _x += _speed_x*deltaTime;
+      _y += _speed_y*deltaTime;
+
+      //we just need to make sure that now _x and _y are still inside the limits...
+      CheckBallPosition();
+      DrawCube();
+    }
+
+    private void ChangeSpeed (Cube c, int x, int y, int z)
     {
-      //tilt is just an extremly simple thing: each axis can only have 3 values
-      // - 0 tilted on one side,
-      // - 1 neutral,
-      // - 2 tilted on the other side...
-      // - except for z where 0 means that the cube is facing done, 2 facing up and 1 resting on one side
-      //so it gave us a few options:
-      // - we know where the stone is rolling by checking the value of x and y,
-      // - z gaves us the "how much tilted information"
-      // i.e. we wants something like :
+      int[] tilt = Helper.NormalizeTilt(x, y, z);
+      int t_x = tilt[0]; int t_y = tilt[1]; int t_z = tilt[2];
 
-      int[] tilt = Helper.NormalizeTilt (x, y, z);
-      int t_x, t_y, t_z;
-      t_x = tilt [0];
-      t_y = tilt [1];
-      t_z = tilt [2];
-      int middle = Cube.SCREEN_WIDTH / 2;
+      _speedChange_x = speedFactor*t_x*(2-t_z);
+      _speedChange_y = speedFactor*t_y*(2-t_z);
+    }
 
-      _x = (int)(middle * (1 + (t_x / (1.0 + t_z * t_z))) - t_x * (1 - t_z * t_z) * (_width / 2 + _borderSize) + (-1)*t_x*t_z*t_z*(_borderSize/2));
-      _y = (int)(middle * (1 + (t_y / (1.0 + t_z * t_z))) - t_y * (1 - t_z * t_z) * (_width / 2 + _borderSize) + (-1)*t_y*t_z*t_z*(_borderSize/2));
-      Log.Debug ("Normalized Tilt : x->" + t_x + ", y->" + t_y + ", z->" + t_z);
-      DrawCube (true);
+    public void UpdateSpeed()
+    {
+      //TODO we might use this method to have a finner tunning of the speed variation
     }
 
     override
@@ -76,9 +84,37 @@ namespace SiftyKurss
       int pic_x = _x - _width / 2;
       int pic_y = _y - _height / 2;
       Log.Debug ("placement values: x->" + _x + ", y->" + _y + ", pic_x->" + pic_x + ", pic_y->" + pic_y);
-      _c.Image (_stone, pic_x, pic_y, 0, 0, _width, _height, 1, 0);
+      _c.Image (_STONE, pic_x, pic_y, 0, 0, _width, _height, 1, 0);
       if (repaint) {
         _c.Paint ();
+      }
+    }
+
+    private void CheckBallPosition(){
+      //let's check X first:
+      if(_x < 0){
+        int min_x = base.MinX + _width/2;//the ball need to be inside the cube hence the _widht/2
+        if( _x < min_x){
+          _x = min_x;
+        }//else it's fine!
+      }else{ //i.e. _x >= 0
+        int max_x = base.MaxX - _width/2;
+        if(_x > max_x){
+          _x = max_x;
+        }//else it's fine!
+      }
+
+      //let's check Y now:
+      if(_y < 0){
+        int min_y = base.MinY + _height/2;
+        if( _y < min_y){
+          _y = min_y;
+        }//else it's fine
+      }else{
+        int max_y = base.MaxY - _height/2;
+        if( _y > max_y){
+          _y = max_y;
+        }
       }
     }
   }

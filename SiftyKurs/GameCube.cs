@@ -26,6 +26,8 @@ namespace SiftyKurss
     public Cube C {
       get { return _c;}
     }
+    public readonly float speedFactor;
+
 
     public GameCube (Cube c)
     {
@@ -36,6 +38,7 @@ namespace SiftyKurss
       _borderSize = 8;
       _borderLength = Cube.SCREEN_WIDTH;
       _visibleBorders = new bool[]{true,true,true,true};
+      speedFactor = 1;
     }
 
     protected void SetBorderDisplay(Cube.Side s, bool visible){
@@ -59,7 +62,7 @@ namespace SiftyKurss
 
     internal virtual void SetupCube(){
       _c.ClearEvents ();
-      DrawCube(true);
+      DrawCube();
 
       _c.NeighborAddEvent += RemoveBorder;
       _c.NeighborRemoveEvent += PutBackBorder;
@@ -69,13 +72,17 @@ namespace SiftyKurss
     {
       Log.Debug("adding back the border");
       SetBorderDisplay(side,true);
-      DrawCube(true);
+      DrawCube();
     }
 
     void RemoveBorder (Cube c, Cube.Side side, Cube neighbor, Cube.Side neighborSide)
     {
       Log.Debug("removing the border");
       SetBorderDisplay(side, false);
+      DrawCube();
+    }
+
+    protected void DrawCube(){
       DrawCube(true);
     }
 

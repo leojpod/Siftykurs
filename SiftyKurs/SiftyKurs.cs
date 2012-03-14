@@ -5,7 +5,8 @@ namespace SiftyKurss
 {
   public class SiftyKurss : BaseApp
   {
-
+    RollingCube rc;
+    float lastRedrawDelta;
     override public int FrameRate
     {
       get { return 20; }
@@ -27,7 +28,7 @@ namespace SiftyKurss
       }
 
       Cube aCube = this.CubeSet[0];
-      RollingCube rc = new RollingCube(aCube);
+      rc = new RollingCube(aCube);
       rc.SetupCube();
       Log.Debug("the rolling cube has the id: "+rc.C.UniqueId);
     }
@@ -35,6 +36,16 @@ namespace SiftyKurss
     override public void Tick()
     {
       //Log.Debug("Tick()");
+      rc.UpdateSpeed();
+      lastRedrawDelta += this.DeltaTime;
+      if(this.IsIdle){
+        float deltaInFrame = lastRedrawDelta * FrameRate;
+        rc.Refresh(lastRedrawDelta);
+        lastRedrawDelta = 0;
+      }else{
+        //we wait to avoid killing the cubes
+        Log.Debug("connection busy");
+      }
     }
 
     // development mode only

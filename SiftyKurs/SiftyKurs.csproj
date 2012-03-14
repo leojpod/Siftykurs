@@ -45,10 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="SiftyKurss.cs" />
     <Compile Include="RollingCube.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="GameCube.cs" />
+    <Compile Include="SiftyKurs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
