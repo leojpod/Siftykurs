@@ -1,9 +1,9 @@
 using Sifteo;
 using System;
 
-namespace SiftyKurss
+namespace SiftyKurs
 {
-  public class SiftyKurss : BaseApp
+  public class SiftyKurs : BaseApp
   {
     RollingCube rc;
     float lastRedrawDelta;
@@ -44,13 +44,13 @@ namespace SiftyKurss
         lastRedrawDelta = 0;
       }else{
         //we wait to avoid killing the cubes
-        Log.Debug("connection busy");
+        //Log.Debug("connection busy");
       }
     }
 
     // development mode only
     // start SiftyKurss as an executable and run it, waiting for Siftrunner to connect
-    static void Main(string[] args) { new SiftyKurss().Run(); }
+    static void Main(string[] args) { new SiftyKurs().Run(); }
   }
 }
 

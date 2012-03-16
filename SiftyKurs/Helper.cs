@@ -1,7 +1,12 @@
 using System;
+using Sifteo;
 
-namespace SiftyKurss
+
+namespace SiftyKurs
 {
+  public enum Angle{
+    NOON, THREE, SIX, NINE
+  };
   public class Helper
   {
     public static int[] NormalizeTilt(int x, int y, int z){
@@ -52,6 +57,41 @@ namespace SiftyKurss
       }
 
       return tilt;
+    }
+
+    public static Angle AngleBetweenNeighbor(Cube.Side mainSide, Cube.Side neighborSide){
+      if(mainSide.Equals(neighborSide)){
+        //the cube are "facing" eachother
+        return Angle.SIX;
+      }
+      Cube.Side temp = NextSide(mainSide, true);
+      if(temp.Equals(neighborSide)){
+        return Angle.THREE;
+      }
+      temp = NextSide(temp, true);
+      if(temp.Equals(neighborSide)){
+        return Angle.NOON;
+      }
+      temp = NextSide(temp, true);
+      if(temp.Equals(neighborSide)){
+        return Angle.NINE;
+      }
+      throw new FormatException("Something is wrong with the given sides: "+mainSide+","+neighborSide);
+    }
+
+    public static Cube.Side NextSide(Cube.Side s, bool clockwise){
+      switch(s){
+      case Cube.Side.TOP:
+        return (clockwise)? Cube.Side.RIGHT : Cube.Side.LEFT;
+      case Cube.Side.RIGHT:
+        return (clockwise)? Cube.Side.BOTTOM : Cube.Side.TOP;
+      case Cube.Side.BOTTOM:
+        return (clockwise)? Cube.Side.LEFT : Cube.Side.RIGHT;
+      case Cube.Side.LEFT:
+        return (clockwise)? Cube.Side.TOP : Cube.Side.BOTTOM;
+      default:
+        throw new FormatException("the given side doesn't exist!");
+      }
     }
   }
 }

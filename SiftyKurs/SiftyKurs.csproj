@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{DC1B27F4-E8DF-4B23-AABB-80E7BF11A4C1}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Game</RootNamespace>
+    <RootNamespace>SiftyKurs</RootNamespace>
     <AssemblyName>Game</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileUpgradeFlags>
@@ -49,6 +49,7 @@
     <Compile Include="Helper.cs" />
     <Compile Include="GameCube.cs" />
     <Compile Include="SiftyKurs.cs" />
+    <Compile Include="CubeSwitchHander.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
