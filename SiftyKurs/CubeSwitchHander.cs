@@ -10,13 +10,16 @@ namespace SiftyKurs
     private readonly Cube.Side rollingCubeSide;
     private readonly Cube futurRollingCube;
     private readonly Cube.Side futurRollingCubeSide;
-
+    private int _number;
+    private static int SwitchHandlerNumber = 0;
 
     internal CubeSwitchHandler(RollingCube c, Cube.Side side, Cube neighbor, Cube.Side neighborSide){
       rollingCube = c;
       rollingCubeSide = side;
       futurRollingCube = neighbor;
       futurRollingCubeSide = neighborSide;
+      _number = SwitchHandlerNumber++;
+      Log.Debug("CubeSwitchHandler#"+_number+" created between: "+c.C.UniqueId+"=>"+side+" & "+neighbor.UniqueId+"=>"+neighborSide);
     }
 
     public void Handle(Cube c, int x, int y, int z){
@@ -56,6 +59,7 @@ namespace SiftyKurs
       if(s.Equals(rollingCubeSide)){
         //this is the right side!
         //let's switch cubes!
+        Log.Debug("Switch required by the CubeSwitcher#"+_number+" between \n\t--->"+rollingCube.C.UniqueId+"=>"+rollingCubeSide+" & "+futurRollingCube.UniqueId+"=>"+futurRollingCubeSide);
         SwitchCubesSmoothly();
       }
     }
@@ -70,6 +74,7 @@ namespace SiftyKurs
        * so we remove this object from the tilt listener list (and the neighbor remove one)
        * because we don't want the ball to switch cube anymore!
        */
+      Log.Debug("Removing the CubeSwitcher#"+_number+"...");
       rollingCube.C.TiltEvent -= this.Handle;
       rollingCube.BallOnBorderEvent -= this.HandleBorderEvent;
       rollingCube.C.NeighborRemoveEvent -= this.Remove;

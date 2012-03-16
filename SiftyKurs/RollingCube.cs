@@ -52,6 +52,7 @@ namespace SiftyKurs
     override
     internal void SetupCube ()
     {
+      BallOnBorderEvent = null;
       base.SetupCube();
       DrawCube ();
 
@@ -75,7 +76,7 @@ namespace SiftyKurs
 
     private void PrepareCubeRolling (Cube c, Cube.Side side, Cube neighbor, Cube.Side neighborSide)
     {
-      //Log.Debug("PrepareCubeRolling!");
+      Log.Debug("PrepareCubeRolling! cube side : "+side+" and neighbor side: "+neighborSide);
       //add a special tilt event listener that will swap the ball from this cube to the other
       switcher = new CubeSwitchHandler(this, side, neighbor, neighborSide);
       //TODO switch must listen the tick to be able to switch the ball of cube...
