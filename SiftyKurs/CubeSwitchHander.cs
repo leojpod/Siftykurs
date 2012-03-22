@@ -23,29 +23,28 @@ namespace SiftyKurs
     }
 
     public void Handle(Cube c, int x, int y, int z){
-      int[] tilt = Helper.NormalizeTilt(x, y, z);
-      int t_x = tilt[0]; int t_y = tilt[1]; int t_z = tilt[2];
+      Tilt t = Helper.NormalizeTilt(x, y, z);
 
-      if(t_z == 0){//i.e. if the cube is vertical
+      if(t.Z == 0){//i.e. if the cube is vertical
         //then the tilt must be on the right side to be interesting!
         switch(rollingCubeSide){
         case Cube.Side.BOTTOM:
-          if(t_y == 1){
+          if(t.Y == 1){
             SwitchCubes();
           }
           break;
         case Cube.Side.TOP:
-          if(t_y == -1){
+          if(t.Y == -1){
             SwitchCubes();
           }
           break;
         case Cube.Side.LEFT:
-          if(t_x == -1){
+          if(t.X == -1){
             SwitchCubes();
           }
           break;
         case Cube.Side.RIGHT:
-          if(t_x == 1){
+          if(t.X == 1){
             SwitchCubes();
           }
           break;
@@ -55,7 +54,7 @@ namespace SiftyKurs
       }//else nothing to do for now
     }
 
-    public void HandleBorderEvent(Cube.Side s){
+    public void HandleGoingOutBallEvent(Cube.Side s){
       if(s.Equals(rollingCubeSide)){
         //this is the right side!
         //let's switch cubes!
@@ -76,7 +75,7 @@ namespace SiftyKurs
        */
       Log.Debug("Removing the CubeSwitcher#"+_number+"...");
       rollingCube.C.TiltEvent -= this.Handle;
-      rollingCube.BallOnBorderEvent -= this.HandleBorderEvent;
+      rollingCube.BallGoingOutEvent -= this.HandleGoingOutBallEvent;
       rollingCube.C.NeighborRemoveEvent -= this.Remove;
     }
 
@@ -162,7 +161,7 @@ namespace SiftyKurs
       GameCube gc = new GameCube(rollingCube.C);
       gc.SetupCube();
       //make the neighbor the new rolling cube
-      rollingCube.MoveToNewCube(futurRollingCube, futur_x, futur_y, futur_speed_x, futur_speed_y);
+      rollingCube.MoveToNewCube(futurRollingCube, futur_x, futur_y, futur_speed_x, futur_speed_y, futurOldGameCube.speedFactor);
       Log.Debug("cube switched!");
       throw new Exception("the ball switched cubes!");
     }

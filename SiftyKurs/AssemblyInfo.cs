@@ -1,6 +1,10 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
+/* we don't care about this file it's just for Sifteo SDK and to deploy it nothing that matters
+ */
+
+
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 

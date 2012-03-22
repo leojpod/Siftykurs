@@ -1,4 +1,12 @@
 BallStone
 borders
+grassTexture
+iceTexture
+numbers
+numbersBlack
+numbersOrange
 pavement
+RollingStone
+sandTexture
+steelTexture
 stoneTest
