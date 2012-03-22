@@ -81,21 +81,13 @@ namespace SiftyKurs
       //to prevent SimpleBounce to be called anyfurther by BallBouncingEvent one can use the -= operator
       rc.BallBouncingEvent += SimpleBounce;
 
-      //this will be removed for the course version
-      rc.BallBouncingEvent += DecreaseBallHP;
-
       //We want to call the method SimpleSwitch each time an event BallSwitchedCubeEvent is fired
       rc.BallSwitchedCubeEvent += SimpleSwitch;
-
-      //this will be removed too
-      rc.BallSwitchedCubeEvent += AddPoint;
 
       //We want to reset the game each time the game is over
       //so we can play all day long and have fun
 
       this.GameOverEvent += SimpleGameOver;
-      //this will be removed too
-      this.GameOverEvent += ResetGame;
     }
 
     public void SimpleBounce(){
@@ -113,19 +105,13 @@ namespace SiftyKurs
      * if the HP are below or equal to zero
      */
     public void DecreaseBallHP(){
-      //we want to decrease the stone health point by one
-      //to remove
-      stoneHealthPoints = stoneHealthPoints - 1;
+      //we want to decrease the stone health point by
+
       //and we want to print the healthPoint on the stone
 
-      //to remove
-      PrintHealthPoint();
-
+      //in case the Healthpoints are below or equal to zero:
       if(stoneHealthPoints <= 0){
-        //to remove
-        if(GameOverEvent != null){
-          GameOverEvent();
-        }
+        //we want to send an event to warn people about it
       }
     }
 
@@ -144,10 +130,6 @@ namespace SiftyKurs
       CubeSet setOfCubes = this.CubeSet;
       //we want to go through all the cubes in our setOfCubes and to print the score on each of them
 
-      //to remove
-      foreach(Cube c in setOfCubes){
-        PrintNumberOnACube(c, score);
-      }
     }
 
     /*
@@ -176,19 +158,14 @@ namespace SiftyKurs
      *  - and it call the RollingCube to reset it. (RollingCube has a method called ResetCube for that)
      */
     public void ResetGame(){
-      //to remove
-      PrintScore();
-      score = 0;
-      stoneHealthPoints = 10;
-      rc.ResetCube();
+
     }
 
     /*
      * This method adds one point to the current score
      */
     public void AddPoint(){
-      //to remove
-      score = score + 1;
+
     }
 
     //This is a sifteo method: it is called each time the cubes finished to compute the previous tick

@@ -19,7 +19,7 @@ namespace SiftyKurs
       futurRollingCube = neighbor;
       futurRollingCubeSide = neighborSide;
       _number = SwitchHandlerNumber++;
-      Log.Debug("CubeSwitchHandler#"+_number+" created between: "+c.C.UniqueId+"=>"+side+" & "+neighbor.UniqueId+"=>"+neighborSide);
+      //Log.Debug("CubeSwitchHandler#"+_number+" created between: "+c.C.UniqueId+"=>"+side+" & "+neighbor.UniqueId+"=>"+neighborSide);
     }
 
     public void Handle(Cube c, int x, int y, int z){
@@ -58,7 +58,7 @@ namespace SiftyKurs
       if(s.Equals(rollingCubeSide)){
         //this is the right side!
         //let's switch cubes!
-        Log.Debug("Switch required by the CubeSwitcher#"+_number+" between \n\t--->"+rollingCube.C.UniqueId+"=>"+rollingCubeSide+" & "+futurRollingCube.UniqueId+"=>"+futurRollingCubeSide);
+        //Log.Debug("Switch required by the CubeSwitcher#"+_number+" between \n\t--->"+rollingCube.C.UniqueId+"=>"+rollingCubeSide+" & "+futurRollingCube.UniqueId+"=>"+futurRollingCubeSide);
         SwitchCubesSmoothly();
       }
     }
@@ -73,7 +73,7 @@ namespace SiftyKurs
        * so we remove this object from the tilt listener list (and the neighbor remove one)
        * because we don't want the ball to switch cube anymore!
        */
-      Log.Debug("Removing the CubeSwitcher#"+_number+"...");
+      //Log.Debug("Removing the CubeSwitcher#"+_number+"...");
       rollingCube.C.TiltEvent -= this.Handle;
       rollingCube.BallGoingOutEvent -= this.HandleGoingOutBallEvent;
       rollingCube.C.NeighborRemoveEvent -= this.Remove;
@@ -162,7 +162,7 @@ namespace SiftyKurs
       gc.SetupCube();
       //make the neighbor the new rolling cube
       rollingCube.MoveToNewCube(futurRollingCube, futur_x, futur_y, futur_speed_x, futur_speed_y, futurOldGameCube.speedFactor);
-      Log.Debug("cube switched!");
+      //Log.Debug("cube switched!");
       throw new Exception("the ball switched cubes!");
     }
   }

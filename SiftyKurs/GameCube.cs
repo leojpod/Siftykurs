@@ -121,7 +121,7 @@ namespace SiftyKurs
     private void initBorder(){
     //let's look for some neighbors...
       if(_c.Neighbors.IsEmpty){
-        Log.Debug("this cube doens't have neighbors");
+        //Log.Debug("this cube doens't have neighbors");
       }else{
         if(_c.Neighbors.Bottom != null){
           SetBorderDisplay(Cube.Side.BOTTOM, false);

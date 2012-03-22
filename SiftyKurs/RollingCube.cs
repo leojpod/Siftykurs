@@ -91,14 +91,14 @@ namespace SiftyKurs
       if(!_c.Neighbors.IsEmpty){
         foreach(Cube c in _c.Neighbors){
           if(c != null){
-            Log.Debug("this rolling cube is already connected with another one");
+            //Log.Debug("this rolling cube is already connected with another one");
             InitCubeSwitchingRegistration(_c, _c.Neighbors.SideOf(c), c, c.Neighbors.SideOf(_c));
           }
         }
       }
       //that's it for now
 
-      Log.Debug("a rolling cube has been set up: speed("+_speed_x+";"+_speed_y+") position("+_x+";"+_y+")");
+      //Log.Debug("a rolling cube has been set up: speed("+_speed_x+";"+_speed_y+") position("+_x+";"+_y+")");
     }
 
     private void InitEventRegistration(){
@@ -117,7 +117,7 @@ namespace SiftyKurs
 
     private void InitCubeSwitchingRegistration (Cube c, Cube.Side side, Cube neighbor, Cube.Side neighborSide)
     {
-      Log.Debug("InitCubeSwitchingRegistration! cube side : "+side+" and neighbor side: "+neighborSide);
+      //Log.Debug("InitCubeSwitchingRegistration! cube side : "+side+" and neighbor side: "+neighborSide);
       //add a special tilt event listener that will swap the ball from this cube to the other
       switcher = new CubeSwitchHandler(this, side, neighbor, neighborSide);
       //TODO switch must listen the tick to be able to switch the ball of cube...
@@ -161,7 +161,7 @@ namespace SiftyKurs
           //Log.Debug("new ball position after calling checkBall -> "+_x+"x"+_y);
         }
       }catch (Exception e){
-        Log.Debug("if the following message says that the ball switched cubes then it's perfect... \n\t-->"+e.Message);
+        //Log.Debug("if the following message says that the ball switched cubes then it's perfect... \n\t-->"+e.Message);
       }
     }
     public void RefreshDrawing(float playedTime){
@@ -238,7 +238,7 @@ namespace SiftyKurs
           if(GoingTowardTheSide(Cube.Side.RIGHT)){
             if(BallGoingOutEvent != null){
               BallGoingOutEvent(Cube.Side.RIGHT);
-              Log.Debug("after a ball on the right border ");
+              //Log.Debug("after a ball on the right border ");
             }
             _speed_x = - 0.5*_speed_x;
             //if we reach this part it means that no switching has been done
@@ -305,7 +305,7 @@ namespace SiftyKurs
     internal void MoveToNewCube(Cube futurRollingCube, int futur_x, int futur_y, double futur_speed_x, double futur_speed_y, double futur_speedFactor){
       _c.NeighborAddEvent -= InitCubeSwitchingRegistration;
       //switcher.Remove();
-      Log.Debug("Before swithing cube the old values are: speed("+_speed_x+";"+_speed_y+") position("+_x+";"+_y+")");
+      //Log.Debug("Before swithing cube the old values are: speed("+_speed_x+";"+_speed_y+") position("+_x+";"+_y+")");
 
       this._c = futurRollingCube;
       _x = futur_x;
